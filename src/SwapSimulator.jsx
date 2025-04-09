@@ -259,7 +259,7 @@ const SwapSimulator = () => {
       <div className="hidden md:block absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-20 bg-purple-400 blur-3xl animate-pulse"
            style={{transform: 'translate(-30%, 30%)', animationDelay: '1s'}}></div>
 
-      <div className="mx-auto p-4 max-w-lg relative" style={{ maxWidth: '100%' }}>
+      <div className="mx-auto p-4 relative w-full md:max-w-lg">
 
         {/* Header with Logo */}
         <div className="flex justify-between items-center mb-6">
