@@ -49,8 +49,8 @@ const SwapSimulator = () => {
   const [k, setK] = useState(token1Balance * token2Balance);
 
   // Token names
-  const [token1Name, setToken1Name] = useState("TOKEN1");
-  const [token2Name, setToken2Name] = useState("TOKEN2");
+  const [token1Name, setToken1Name] = useState("TOKEN");
+  const [token2Name, setToken2Name] = useState("USDT");
 
   // User balances
   const [userToken1, setUserToken1] = useState(10000);
@@ -254,7 +254,7 @@ const SwapSimulator = () => {
       <div style={gradientBgStyle}></div>
 
       {/* Animated glow orbs */}
-      <div className="hidden md:block absolute top-0 right-0 w-96 h-96 rounded-full opacity-20 bg-blue-400 blur-3xl animate-pulse"
+      <div className="hidden md:block absolute top-0 right-0 w-96 h-96 rounded-full opacity-20 bg-blue-400 blur-3xl animate-pulse duration-400"
            style={{transform: 'translate(30%, -30%)'}}></div>
       <div className="hidden md:block absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-20 bg-purple-400 blur-3xl animate-pulse"
            style={{transform: 'translate(-30%, 30%)', animationDelay: '1s'}}></div>
