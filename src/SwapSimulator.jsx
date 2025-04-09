@@ -16,10 +16,30 @@ const SwapSimulator = () => {
     // Add font-family to the root element
     document.documentElement.style.fontFamily = `'${FONT_FAMILY}', sans-serif`;
 
+    // Remove default margins and padding from body and html
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+    document.documentElement.style.margin = '0';
+    document.documentElement.style.padding = '0';
+    document.body.style.width = '100%';
+    document.body.style.height = '100vh';
+    document.documentElement.style.width = '100%';
+    document.documentElement.style.height = '100vh';
+    document.body.style.overflow = 'hidden';
+
     // Clean up on component unmount
     return () => {
       document.head.removeChild(fontLink);
       document.documentElement.style.fontFamily = '';
+      document.body.style.margin = '';
+      document.body.style.padding = '';
+      document.documentElement.style.margin = '';
+      document.documentElement.style.padding = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      document.documentElement.style.width = '';
+      document.documentElement.style.height = '';
+      document.body.style.overflow = '';
     };
   }, []);
 
@@ -29,8 +49,8 @@ const SwapSimulator = () => {
   const [k, setK] = useState(token1Balance * token2Balance);
 
   // Token names
-  const [token1Name, setToken1Name] = useState("Token A");
-  const [token2Name, setToken2Name] = useState("Token B");
+  const [token1Name, setToken1Name] = useState("TOKEN1");
+  const [token2Name, setToken2Name] = useState("TOKEN2");
 
   // User balances
   const [userToken1, setUserToken1] = useState(10000);
@@ -51,8 +71,8 @@ const SwapSimulator = () => {
   // Theme state
   const [isDarkMode, setIsDarkMode] = useState(true);
 
-  // Logo URL - easy to customize
-  const [logoUrl, setLogoUrl] = useState(""); // Set your logo URL here
+  // Logo URL - using the logo from public folder
+  const [logoUrl, setLogoUrl] = useState("/swapsim.png");
 
   // Calculate expected output and price impact whenever input changes
   useEffect(() => {
@@ -229,7 +249,7 @@ const SwapSimulator = () => {
   const token2Color = isDarkMode ? 'bg-purple-600' : 'bg-purple-500';
 
   return (
-    <div className={`relative min-h-screen p-4 overflow-hidden ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
+    <div className={`fixed inset-0 w-full h-full overflow-auto ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`} style={{ margin: 0, padding: 0 }}>
       {/* Gradient background effect */}
       <div style={gradientBgStyle}></div>
 
@@ -239,20 +259,22 @@ const SwapSimulator = () => {
       <div className="hidden md:block absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-20 bg-purple-400 blur-3xl animate-pulse"
            style={{transform: 'translate(-30%, 30%)', animationDelay: '1s'}}></div>
 
-      <div className="max-w-lg mx-auto relative">
+      <div className="mx-auto p-4 max-w-lg relative" style={{ maxWidth: '100%' }}>
 
         {/* Header with Logo */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
-            {/* Logo placeholder - replace with your logo */}
-            <div className="mr-3 w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+            {/* Logo - using your custom logo */}
+            <div className="mr-3 w-32 h-10 flex items-center justify-center">
               {logoUrl ? (
-                <img src={logoUrl} alt="Logo" className="w-8 h-8 rounded-full" />
+                <img src={logoUrl} alt="Logo" className="w-32 h-32" />
               ) : (
-                <span className="text-white font-bold text-lg">S</span>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+                  <span className="text-white font-bold text-lg">S</span>
+                </div>
               )}
             </div>
-            <h1 className="text-xl font-bold">Leonardo's SWAP Simulator</h1>
+            {/*<h1 className="text-xl font-bold">Leonardo's SWAP Simulator</h1>*/}
           </div>
           <div className="flex space-x-2">
             <button
@@ -271,7 +293,7 @@ const SwapSimulator = () => {
         </div>
 
         {/* Token Configuration */}
-        <div className={`p-4 rounded-lg mb-6 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`} style={primaryGlow}>
+        <div className={`p-3 rounded-lg mb-4 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`} style={primaryGlow}>
           <h2 className="text-lg font-semibold mb-2">Token Configuration</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -298,7 +320,7 @@ const SwapSimulator = () => {
         </div>
 
         {/* Price Display */}
-        <div className={`p-4 rounded-lg mb-6 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
+        <div className={`p-3 rounded-lg mb-4 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
           <h2 className="text-lg font-semibold mb-2">Current Prices</h2>
           <div className="grid grid-cols-2 gap-4">
             <div className={`p-3 rounded-lg transition-all ${isDarkMode ? 'bg-blue-900/60' : 'bg-blue-100'}`} style={secondaryGlow}>
@@ -345,7 +367,7 @@ const SwapSimulator = () => {
         </div>
 
         {/* Swap Form */}
-        <div className={`p-4 rounded-lg mb-6 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`} style={primaryGlow}>
+        <div className={`p-3 rounded-lg mb-4 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`} style={primaryGlow}>
           <h2 className="text-lg font-semibold mb-4">Swap Tokens</h2>
 
           {/* Input */}
@@ -451,7 +473,7 @@ const SwapSimulator = () => {
         </div>
 
         {/* Liquidity Pool Info */}
-        <div className={`p-4 rounded-lg mb-6 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
+        <div className={`p-3 rounded-lg mb-4 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
           <h2 className="text-lg font-semibold mb-2">Liquidity Pool</h2>
           <div className="grid grid-cols-2 gap-2 mb-2">
             <div className="flex items-center">
@@ -473,7 +495,7 @@ const SwapSimulator = () => {
         </div>
 
         {/* User Balance */}
-        <div className={`p-4 rounded-lg mb-6 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
+        <div className={`p-3 rounded-lg mb-4 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
           <h2 className="text-lg font-semibold mb-2">Your Balance</h2>
           <div className="grid grid-cols-2 gap-2">
             <div className="flex items-center">
@@ -494,7 +516,7 @@ const SwapSimulator = () => {
 
 
         {/* Price Impact Explanation */}
-        <div className={`p-4 rounded-lg mb-6 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
+        <div className={`p-3 rounded-lg mb-4 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
           <h2 className="text-lg font-semibold mb-2">Price Impact Visualization</h2>
           <div className="text-sm opacity-80 mb-3">
             When you swap tokens, you change the ratio of tokens in the pool, which affects their price.
@@ -516,7 +538,7 @@ const SwapSimulator = () => {
         </div>
 
         {/* Educational Notes */}
-        <div className={`p-4 rounded-lg text-sm mb-8 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
+        <div className={`p-3 rounded-lg text-sm mb-4 transition-all ${isDarkMode ? 'bg-gray-800/80' : 'bg-white/90 shadow'}`}>
           <h2 className="text-md font-semibold mb-2">How It Works</h2>
           <ul className="space-y-2 opacity-80">
             <li>• This simulator demonstrates the <b>constant product formula</b>: x × y = k</li>
@@ -529,7 +551,7 @@ const SwapSimulator = () => {
 
         {/* Footer with attribution */}
         <div className="text-center text-sm opacity-60 mb-4">
-          Designed for educational purposes
+          Designed for educational purposes by Leonardo Avelar
         </div>
       </div>
     </div>
